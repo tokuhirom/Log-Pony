@@ -20,13 +20,13 @@ subtest 'basic' => sub {
     $logger->info("foo");
     $logger->warn("bar");
     $logger->debug("baz");
-    $logger->crit("woot");
+    $logger->critical("woot");
     is_deeply(
         \@lines, [
             '[INFO] foo',
             '[WARN] bar',
             '[DEBUG] baz',
-            '[CRIT] woot',
+            '[CRITICAL] woot',
         ]
     );
     clear_lines();
@@ -37,12 +37,12 @@ subtest 'log level' => sub {
     $logger->info("foo");
     $logger->warn("bar");
     $logger->debug("baz");
-    $logger->crit("woot");
+    $logger->critical("woot");
     is_deeply(
         \@lines, [
             '[INFO] foo',
             '[WARN] bar',
-            '[CRIT] woot',
+            '[CRITICAL] woot',
         ], 'no debug line',
     );
     clear_lines();

@@ -38,7 +38,7 @@ subtest 'Customized levels' => sub {
 subtest 'Throw an exception when got unknown level' => sub {
     my $logger = My::Logger->new(log_level => 'debug');
     eval {
-        $logger->crit("woot");
+        $logger->critical("woot");
     };
     ok($@) && like($@, qr/Unknown logging level: CRIT/);
     clear_lines();

@@ -21,14 +21,14 @@ subtest 'basic' => sub {
     $logger->info("foo");
     $logger->warn("bar");
     $logger->debug("baz");
-    $logger->crit("woot");
+    $logger->critical("woot");
     $logger->log('INFO', "log!");
     is_deeply(
         \@lines, [
             '[INFO] foo at t/02_trace_info.t line 21',
             '[WARN] bar at t/02_trace_info.t line 22',
             '[DEBUG] baz at t/02_trace_info.t line 23',
-            '[CRIT] woot at t/02_trace_info.t line 24',
+            '[CRITICAL] woot at t/02_trace_info.t line 24',
             '[INFO] log! at t/02_trace_info.t line 25',
         ]
     );

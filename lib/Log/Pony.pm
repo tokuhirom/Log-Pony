@@ -8,7 +8,7 @@ use Carp ();
 
 our $TRACE_LEVEL = 0;
 
-__PACKAGE__->set_levels(qw/debug info warn crit/);
+__PACKAGE__->set_levels(qw/debug info warn critical/);
 
 sub new {
     my $class = shift;
@@ -74,10 +74,10 @@ sub warn {
     $self->log(WARN => @_);
 }
 
-sub crit {
+sub critical {
     my $self = shift;
     local $TRACE_LEVEL = $TRACE_LEVEL + 1;
-    $self->log(CRIT => @_);
+    $self->log(CRITICAL => @_);
 }
 
 sub debug {
@@ -132,7 +132,7 @@ Log::Pony - Yet another simple logger class
     );
     $logger->info("Payed by her");
     $logger->warn("A unexpected things happend!");
-    $logger->crit("Ouch! Disk full!");
+    $logger->critical("Ouch! Disk full!");
     $logger->debug("Through here...");
 
 =head1 DESCRIPTION
@@ -190,9 +190,9 @@ Shorthand for C<< $logger->log('INFO', @msg) >>.
 
 Shorthand for C<< $logger->log('WARN', @msg) >>.
 
-=item $logger->crit(@msg)
+=item $logger->critical(@msg)
 
-Shorthand for C<< $logger->log('CRIT', @msg) >>.
+Shorthand for C<< $logger->log('CRITICAL', @msg) >>.
 
 =back
 
