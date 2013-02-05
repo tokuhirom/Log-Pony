@@ -188,11 +188,19 @@ Create new Log::Pony instance.
 Mandatory parameter for this method is B<log_level>.
 You can on specify the log level by constructor.
 
+Optionaly, you can pass B<color> parameter.
+It enables colorize for default C<< $logger->process >> method.
+You can access this parameters value by C<< $logger->color() >>.
+
 And other parameters passed to C<< $logger->init(%args) >> method.
 
 =item my $level = $logger->log_level() : Str
 
 Get a current log level in string.
+
+=item $logger->color() : Bool
+
+Returns color parameter passed at constructor.
 
 =item $logger->log($level, $format, @args);
 
@@ -285,6 +293,15 @@ Get a trace information in following format:
 You can add this trace information folloing log message, then
 you can debug more easily.
 
+=item $self->colorize($level: Str, $message: Str) : Str
+
+Colorize your message for readability.
+
+C<< $level >> is string indicates level name.
+C<< $message >> is string to colorize.
+
+I<Return value>: Colorized $message.
+
 =back
 
 =back
@@ -307,6 +324,12 @@ You need pass the levels as first is whatever thing, last is important.
 
 This methods non existent method automatically.
 In this case, you can call C<< $logger->emergency($msg) >> method after this definition.
+
+=item MyLogger->set_colors(@colors);
+
+    __PACKAGE__->set_colors(   'red on_white', 'green', 'black on_yellow', 'black on_red', 'red on_black');
+
+Set colors for each levels. You should put order of colors are same as levels.
 
 =back
 
