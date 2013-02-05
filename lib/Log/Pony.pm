@@ -5,10 +5,15 @@ use utf8;
 use 5.008005;
 our $VERSION = '1.0.0';
 use Carp ();
+use Term::ANSIColor ();
+use Class::Accessor::Lite (
+    ro => [qw/color log_level/],
+);
 
 our $TRACE_LEVEL = 0;
 
-__PACKAGE__->set_levels(qw/debug info warn critical/);
+__PACKAGE__->set_levels(qw( debug           info     warn               critical        error));
+__PACKAGE__->set_colors(   'red on_white', 'green', 'black on_yellow', 'black on_red', 'red on_black');
 
 sub new {
     my $class = shift;
@@ -16,9 +21,11 @@ sub new {
     my $log_level = delete $args{log_level}
             or Carp::croak("Missing mandatory parameter: log_level");
        $log_level = uc($log_level);
+    my $color     = delete $args{color} || 0;
     my $self = bless {
         log_level   => $log_level,
         log_level_n => $class->level_to_number($log_level),
+        color       => $color,
     }, $class;
     $self->init(%args);
     return $self;
@@ -26,7 +33,19 @@ sub new {
 
 sub init { }
 
-sub log_level { $_[0]->{log_level} }
+sub set_colors {
+    my ($class, @colors) = @_;
+    no strict 'refs';
+    *{"${class}::colors"} = sub { @colors };
+}
+
+sub colorize {
+    my ($self, $level, $message) = @_;
+    my $n = $self->level_to_number($level);
+    my @colors = $self->colors();
+    my $color = $colors[$n] || $colors[-1];
+    return Term::ANSIColor::colored([$color], $message);
+}
 
 sub log {
     my ($self, $level, $format, @args) = @_;
@@ -59,6 +78,9 @@ sub process {
     my ($self, $level, $message) = @_;
     my $time = $self->time();
     my $trace = $self->trace_info();
+    if ($self->color) {
+        $message = $self->colorize($level, $message);
+    }
     print STDERR "$time [$level] $message $trace\n";
 }
 
