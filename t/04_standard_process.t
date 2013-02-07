@@ -15,7 +15,7 @@ my $buf;
     my $logger = Log::Pony->new(log_level => 'DEBUG');
     $logger->info("YAY");
 }
-like $buf, qr{\A\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d \[INFO\] YAY at t/04_standard_process.t line 16\n\z};
+like $buf, qr{\A\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d \[INFO\] YAY at t.04_standard_process.t line 16\n\z};
 
 done_testing;
 

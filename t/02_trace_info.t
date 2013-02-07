@@ -25,11 +25,12 @@ subtest 'basic' => sub {
     $logger->log('INFO', "log!");
     is_deeply(
         \@lines, [
-            '[INFO] foo at t/02_trace_info.t line 21',
-            '[WARN] bar at t/02_trace_info.t line 22',
-            '[DEBUG] baz at t/02_trace_info.t line 23',
-            '[CRITICAL] woot at t/02_trace_info.t line 24',
-            '[INFO] log! at t/02_trace_info.t line 25',
+            map { s!t/02_trace_info.t!__FILE__!ge }
+            "[INFO] foo at t/02_trace_info.t line 21",
+            "[WARN] bar at t/02_trace_info.t line 22",
+            "[DEBUG] baz at t/02_trace_info.t line 23",
+            "[CRITICAL] woot at t/02_trace_info.t line 24",
+            "[INFO] log! at t/02_trace_info.t line 25",
         ]
     );
     clear_lines();
