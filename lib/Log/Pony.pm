@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use utf8;
 use 5.008005;
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 use Carp ();
 use Term::ANSIColor ();
 use Class::Accessor::Lite (
